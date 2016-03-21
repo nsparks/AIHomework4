@@ -14,10 +14,10 @@ def main():
   #
   # Linear Regressions
   #
-  lr = linear_regression(alpha=1E-7, decay_rate=10000)
+  lr = linear_regression(alpha=1E-7, decay_rate=20000)
   
   # train regression
-  output_15 = lr.train_regression(inputs_15, targets, max_loops=50000)
+  output_15 = lr.train_regression(inputs_15, targets, max_loops=70000)
   
   # predicts outputs
   predictions_16 = lr.predict_regression(inputs_16)
