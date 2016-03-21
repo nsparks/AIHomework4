@@ -14,10 +14,10 @@ def main():
   #
   # Linear Regressions
   #
-  lr = linear_regression(alpha=1E-7)
+  lr = linear_regression(alpha=1E-8)
   
   # train regression
-  output_15 = lr.train_regression(inputs_15, targets, max_loops=5000)
+  output_15 = lr.train_regression(inputs_15, targets, max_loops=100)
   
   # predicts outputs
   predictions_16 = lr.predict_regression(inputs_16)
@@ -181,13 +181,13 @@ class k_means_cluster():
         
     return min_center
   
+
 class linear_regression():
   def __init__(self, alpha=1E-5, weights=[], w_0=0.0):
     self.alpha = alpha
     self.weights = weights
     self.w_0 = w_0
     
-  
   def predict_regression(self, samples):
     return np.dot(samples, self.weights)
 
@@ -223,12 +223,11 @@ class linear_regression():
       for sample, y in zip(samples, solutions):
         prediction = np.dot(sample, self.weights) + self.w_0
         error = self.error(y, prediction)
-        ss_error = sse(y, prediction)
         delta = self.alpha * error
-        self.weights += delta
-        self.w_0 += self.alpha * error
+        self.weights = np.add(np.multiply(delta, sample), self.weights)
+        self.w_0 += delta
         # err += error
-        err += ss_error
+        err += sse(y, prediction)
 
         """
         # run on each sample
