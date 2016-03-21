@@ -14,7 +14,7 @@ def main():
   #
   # Linear Regressions
   #
-  lr = linear_regression(alpha=1E-8)
+  lr = linear_regression(alpha=1E-7, decay_rate=10000)
   
   # train regression
   output_15 = lr.train_regression(inputs_15, targets, max_loops=50000)
@@ -183,15 +183,16 @@ class k_means_cluster():
   
 
 class linear_regression():
-  def __init__(self, alpha=1E-5, weights=[], w_0=0.0):
+  def __init__(self, alpha=1E-5, weights=[], w_0=0.0, decay_rate=500):
     self.alpha = alpha
     self.weights = weights
     self.w_0 = w_0
+    self.decay_rate = decay_rate
     
   def predict_regression(self, samples):
     return np.dot(samples, self.weights) + self.w_0
 
-  def train_regression(self, samples, solutions, max_loops=5000, sigma=(1**(-6)), val_ratio=0.2):
+  def train_regression(self, samples, solutions, max_loops=50000):
     err = -1
     i = 0
     output = []
@@ -204,6 +205,9 @@ class linear_regression():
     for i in range(max_loops):
       # shuffle samples
       samples, solutions = shuffle_lists(samples, solutions)
+
+      if self.decay_rate > 0 and i % self.decay_rate == 0:
+        self.alpha = self.alpha / 2.0
     
       for sample, y in zip(samples, solutions):
         prediction = np.dot(sample, self.weights) + self.w_0
