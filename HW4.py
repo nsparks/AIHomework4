@@ -183,7 +183,7 @@ class k_means_cluster():
   
 
 class linear_regression():
-  def __init__(self, alpha=1E-5, weights=[], w_0=0.0, decay_rate=500):
+  def __init__(self, alpha=1E-5, weights=[], w_0=0.0, decay_rate=-1):
     self.alpha = alpha
     self.weights = weights
     self.w_0 = w_0
