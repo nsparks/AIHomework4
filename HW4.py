@@ -43,6 +43,7 @@ def main():
   #
   # K-Means Clusters
   #
+  
   k = k_means_cluster()
   k.cluster(k_inputs_15)
   predictions = k.predict(k_inputs_16)
@@ -148,7 +149,7 @@ class k_means_cluster():
       
       error += sse(t, predicted_temp)
       
-    error /= len(X)
+    # error /= len(X)
     return error
   
   def predict(self, X):
@@ -181,7 +182,7 @@ class k_means_cluster():
     return min_center
   
 class linear_regression():
-  def __init__(self, alpha = 1E-5, weights=[], w_0=0.0):
+  def __init__(self, alpha=1E-5, weights=[], w_0=0.0):
     self.alpha = alpha
     self.weights = weights
     self.w_0 = w_0
@@ -222,10 +223,12 @@ class linear_regression():
       for sample, y in zip(samples, solutions):
         prediction = np.dot(sample, self.weights) + self.w_0
         error = self.error(y, prediction)
+        ss_error = sse(y, prediction)
         delta = self.alpha * error
         self.weights += delta
         self.w_0 += self.alpha * error
-        err += error
+        # err += error
+        err += ss_error
 
         """
         # run on each sample
@@ -252,7 +255,8 @@ class linear_regression():
         """
         
       err /= len(samples)
-      output.append(math.fabs(err))
+      # output.append(math.fabs(err))
+      output.append(err)
       
     
       # check validation set
